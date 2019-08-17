@@ -34,7 +34,7 @@ public class Controller {
 
     @PostMapping(value = "/updatePwd", produces = "application/json;charset=UTF-8"   )
     public Object updatePwd(@RequestBody LoginRequest request) {
-        return mService.updatePwd(request.getUserId(),request.getUserId(),  request.getPassword());
+        return mService.updatePwd(request.getUserId(),request.getOldPassword(),  request.getPassword());
     }
 
     /* PC扫码操作

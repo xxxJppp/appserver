@@ -12,6 +12,7 @@ import cn.wildfirechat.sdk.ChatConfig;
 import cn.wildfirechat.sdk.MessageAdmin;
 import cn.wildfirechat.sdk.UserAdmin;
 import cn.wildfirechat.sdk.model.IMResult;
+import com.google.gson.Gson;
 import org.json.JSONException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,6 +21,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.PostConstruct;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -389,9 +392,9 @@ public class ServiceImpl implements Service {
         try {
             IMResult<ErrorCode> result = UserAdmin.updatePwd(userId, oldpassword , password);
             if(result.getErrorCode() == ErrorCode.ERROR_CODE_SUCCESS){
-                return RestResult.ok(result.getResult());
+                return RestResult.ok(result);
             }else if(result.getErrorCode() == ErrorCode.ERROR_CODE_PASSWORD_INCORRECT){
-                return RestResult.ok(RestResult.RestCode.ERROR_PASSWORD_INCORRECT);
+                return RestResult.error(RestResult.RestCode.ERROR_PASSWORD_INCORRECT);
             }else if(result.getCode() != 0){
                 LOG.error("Get user failure {}", result.code);
                 return RestResult.error(RestResult.RestCode.ERROR_SERVER_ERROR);
